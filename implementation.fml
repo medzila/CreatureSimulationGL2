@@ -1,0 +1,19 @@
+fm1 = FM (CreatureSimulator : Motor Creature [EnergySource];
+		  Motor : [Speed] Visual;
+		  Creature : C_Headcount Behaviour Movement [Color] [LengthOfView] [FieldOfView];
+		  EnergySource : E_Headcount Size;
+		  Behaviour : (Emerging|Energy|Predator|Random|Stupid|EmergingThenEnergy|EmergingThenPredator);
+		  Movement : (Torus|Bouncing);
+		  Visual : (Snapshot|Running);
+		  C_Headcount : (C_1|C_25|C_50);
+		  E_Headcount : (E_1|E_5|E_10);
+		  Color : (Cube|Unique);
+		  LengthOfView : (LOV_50|LOV_75|LOV_100);
+		  FieldOfView : (FOV_45|FOV_90|FOV_360);
+		  Size : (S_20|S_50|S_1000);
+		  Speed : (Sp_Fast|Sp_SuperFast|Sp_Normal);
+		  SnapShot->Sp_SuperFast;
+		  EmergingThenEnergy-> EnergySource;
+		  Energy->EnergySource;
+		  S_1000->E_1;)
+		  
