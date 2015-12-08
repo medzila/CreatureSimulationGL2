@@ -1,12 +1,12 @@
 package fr.unice.deptinfo.simu_generator;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import main.Launcher;
 
@@ -22,36 +22,59 @@ import fr.unice.polytech.modalis.familiar.variable.FeatureModelVariable;
  */
 public class App 
 {
-	public static String affiche(String fichier) throws IOException {
-		String ligne = "";
 
-		BufferedReader ficTexte;
-		try {
-			ficTexte = new BufferedReader(new FileReader(new File(fichier)));
-			if (ficTexte == null) {
-				throw new FileNotFoundException("Fichier non trouvé: "
-						+ fichier);
-			}
-			do {
-				ligne += ficTexte.readLine();
-			} while (ficTexte != null);
-			ficTexte.close();
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
-		return ligne;
-
+	public static HashMap<String, String> dictionnary = new HashMap<>();
+	public static Pattern pattern;
+	public static Matcher matcher;
+	
+	/**
+	 * Initialize the dictionnary
+	 */
+	public static void initDictionnary(){
+		dictionnary.put("BEV", "Random");
+		dictionnary.put("MOV", "Torus");
+		dictionnary.put("CHC", "1");
+		dictionnary.put("EHC", "0");
+		dictionnary.put("COL", "Cube");
+		dictionnary.put("LOV", "50");
+		dictionnary.put("FOV", "45");
+		dictionnary.put("ES", "0");
+		dictionnary.put("SD", "0");
+		dictionnary.put("Duration", "1000");
 	}
+	
+	/**
+	 * Parse an arraylist of strings and store in the dictionnary
+	 * @param toParse an {@link ArrayList} of String 
+	 */
+	public static void parse(ArrayList<String> toParse){
+		pattern = Pattern.compile(".+_.+");
+		String[] splitted;
+		
+		// for each feature
+		for(String feature : toParse){
+			matcher = pattern.matcher(feature);
+			
+			// if a feature is like: 1_2, split it and store it in the dictionnary with key=1 and value=2 
+			if(matcher.matches()){
+				splitted = feature.split("_");
+				String key = splitted[0];
+				String value = splitted[1];
+				
+				dictionnary.put(key, value);
+			}
+		}
+	}
+	
     public static void main( String[] args ) throws IOException
     {
-
-    	//String FM = affiche("src/commons/feature.fml");
-    	//System.out.println(FM);
+    	//init the dict
+    	initDictionnary();
+    	System.out.println(dictionnary);
+    	
     	String fmName = "fmSimu";
     	String configName = "config1";
-    	
+    	System.out.println("\n\n\n"+dictionnary+"\n\n\n");
     	FamiliarInterpreter fi = FamiliarInterpreter.getInstance();
     	try {
 			fi.evalFile("src/commons/simu.fml");
@@ -75,12 +98,10 @@ public class App
 		        	System.out.println("Unselected features :"+fi.getUnselectedFeature(configName));
 	        	}
 	        } while (!s.equals("exit"));
-	        if(fi.getSelectedFeature(configName).contains("C_1")){
-	        	Launcher.launch(1);
-	        }
-	        if(fi.getSelectedFeature(configName).contains("C_10")){
-	        	Launcher.launch(10);
-	        }
+	        
+	        parse(new ArrayList<String>(fi.getSelectedFeature(configName)));
+	    	System.out.println(dictionnary);
+	        
 		} catch (FMEngineException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
