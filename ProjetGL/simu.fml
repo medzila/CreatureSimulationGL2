@@ -13,17 +13,17 @@ Implementation = FM (I_CreatureSimulator : Engine I_Creature [EnergySource];
 		  Size : (S_20|S_50|S_1000);
 		  SleepDuration : (SD_10|SD_0|SD_200|SD_1000);
 		  Duration : (D_1000|D_5000|D_10000);
-		  SnapShot->SD_0;
-		  SnapShot->Duration;
+		  I_SnapShot->SD_0;
+		  I_SnapShot->Duration;
 		  EmergingThenEnergy-> EnergySource;
 		  Energy->EnergySource;
 		  S_1000->E_1;)
 		  
-Domaine = FM (M_CreatureSimulator : Affichage M_Creature [Demo];
-		  Affichage : [D_RealTime] [M_Snapshot] [Debug];
-		  M_Snapshot : (Court|Moyen|Long);
+Domaine = FM (D_CreatureSimulator : Affichage D_Creature [Demo];
+		  Affichage : [D_RealTime] [D_Snapshot] [Debug];
+		  D_Snapshot : (Court|Moyen|Long);
 		  D_RealTime : (Lente|Rapide|TresRapide);
-		  M_Creature : Type Nombre;
+		  D_Creature : Type Nombre;
 		  Type: (Troupeau|Rebond|Predateur|Recherche);
 		  Nombre: (Seul|Peu|Beaucoup);
 		  Demo : (DemoParametrable|DemoNonParametrable);
@@ -33,8 +33,10 @@ Domaine = FM (M_CreatureSimulator : Affichage M_Creature [Demo];
 		  ModelePredateur -> Predateur;
 		  MortIneluctable -> Seul;
 		  MortIneluctable -> Rebond;
+		  MortIneluctable -> Court;
 		  Immortels -> Peu;
 		  Immortels -> Troupeau;
+		  Immortels -> Long;
 		  ModeleRecherche -> Recherche;)
 		  
 
@@ -44,30 +46,31 @@ regles = constraints(Court <-> D_1000;
 					TresRapide <-> SD_10;
 					Rapide <-> SD_200;
 					Lente <-> SD_1000;
-					M_Snapshot -> I_Snapshot;
-					!M_Snapshot -> I_RealTime;
-					Peu <-> C_25;
+					D_Snapshot -> I_Snapshot;
+					!D_Snapshot -> I_RealTime;
 					Seul <-> C_1;
+					Peu <-> C_25;
 					Beaucoup <-> C_50;
 					Predateur -> Predator;
 					Predateur -> Torus;
+					Predateur -> FOV_90;
+		  			Predateur -> LOV_100;
 					Rebond -> Bouncing;
 					Rebond -> Stupid;
 					Troupeau -> Emerging;
 					Troupeau -> Torus;
 					Troupeau -> !C_1;
+					Troupeau -> FOV_45;
+		  			Troupeau -> LOV_75;
 					Recherche -> Energy;
 					Recherche -> Torus;
+					Recherche -> FOV_45;
+		  			Recherche -> LOV_50;
 					MortIneluctable -> E_1;
 					MortIneluctable -> S_1000;
 					Immortels -> C_25;
 					Immortels -> E_10;
 					Immortels -> S_50;
-					Immortels -> Torus;
-					Predateur -> FOV_90;
-		  			Predateur -> LOV_100;
-		  			Troupeau -> FOV_45;
-		  			Troupeau -> LOV_75;
-		  			Recherche -> FOV_45;
-		  			Recherche -> LOV_50;)
+					Immortels -> Torus;)
 fmSimu = aggregate { Implementation Domaine } withMapping regles
+
