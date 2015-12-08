@@ -40,12 +40,12 @@ Domaine = FM (D_CreatureSimulator : Affichage D_Creature [Demo];
 		  ModeleRecherche -> Recherche;)
 		  
 
-regles = constraints(Court <-> D_1000;
-					Moyen <-> D_5000;
-					Long <-> D_10000;
-					TresRapide <-> SD_10;
-					Rapide <-> SD_200;
-					Lente <-> SD_1000;
+regles = constraints(Court -> D_1000;
+					Moyen -> D_5000;
+					Long -> D_10000;
+					TresRapide -> SD_10;
+					Rapide -> SD_200;
+					Lente -> SD_1000;
 					D_Snapshot -> I_Snapshot;
 					!D_Snapshot -> I_RealTime;
 					Seul <-> C_1;
