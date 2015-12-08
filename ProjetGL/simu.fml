@@ -20,7 +20,7 @@ Implementation = FM (I_CreatureSimulator : Engine I_Creature [EnergySource];
 		  S_1000->E_1;)
 		  
 Domaine = FM (D_CreatureSimulator : Affichage D_Creature [Demo];
-		  Affichage : [D_RealTime] [D_Snapshot] [Debug];
+		  Affichage : (D_RealTime|D_Snapshot|Debug);
 		  D_Snapshot : (Court|Moyen|Long);
 		  D_RealTime : (Lente|Rapide|TresRapide);
 		  D_Creature : Type Nombre;
@@ -71,6 +71,8 @@ regles = constraints(Court <-> D_1000;
 					Immortels -> C_25;
 					Immortels -> E_10;
 					Immortels -> S_50;
-					Immortels -> Torus;)
+					Immortels -> Torus;
+					Debug -> SD_1000;
+					Debug -> I_RealTime;)
 fmSimu = aggregate { Implementation Domaine } withMapping regles
 
