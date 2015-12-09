@@ -1,6 +1,7 @@
-package fr.unice.deptinfo.simu_generator;
+package config;
 
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,13 +21,58 @@ import fr.unice.polytech.modalis.familiar.variable.FeatureModelVariable;
  * Hello world!
  *
  */
-public class App 
+public class ConfigHandler 
 {
 
 	public static HashMap<String, String> dictionnary = new HashMap<>();
 	public static Pattern pattern;
 	public static Matcher matcher;
 	
+	public static String pathOfFML = "src/commons/simu.fml";
+	
+	
+	public ConfigHandler(){
+		initDictionnary();
+	}
+
+	public void launchConfig(){
+		String fmName = "fmSimu";
+    	String configName = "config";
+ 
+    	FamiliarInterpreter fi = FamiliarInterpreter.getInstance();
+    	try {
+			fi.evalFile(pathOfFML);
+			FeatureModelVariable fmv = fi.getFMVariable(fmName);
+	    	
+	    	System.out.println("Instantiated FM : "+fmv.getSyntacticalRepresentation());
+	    	
+	    	fi.eval(configName+" = configuration "+fmName);
+	    	
+	    	System.out.println("Selected avant: "+fi.getSelectedFeature(configName));
+	    	fi.evalFile("config/config1.fml");
+	    	System.out.println("Selected apres: "+fi.getSelectedFeature(configName));
+	    	
+	        System.out.println("\n\n\n"+dictionnary+"\n");
+	        parse(new ArrayList<String>(fi.getSelectedFeature(configName)));
+	    	System.out.println(dictionnary);
+	        
+		} catch (FMEngineException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (VariableNotExistingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (VariableAmbigousConflictException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * Initialize the dictionnary
 	 */
@@ -68,13 +114,17 @@ public class App
 	
     public static void main( String[] args ) throws IOException
     {
-    	//init the dict
+    	
+    	ConfigHandler c = new ConfigHandler();
+    	c.launchConfig();
+    	
+    	/*//init the dict
+    	
     	initDictionnary();
-    	System.out.println(dictionnary);
     	
     	String fmName = "fmSimu";
     	String configName = "config1";
-    	System.out.println("\n\n\n"+dictionnary+"\n\n\n");
+ 
     	FamiliarInterpreter fi = FamiliarInterpreter.getInstance();
     	try {
 			fi.evalFile("src/commons/simu.fml");
@@ -99,6 +149,7 @@ public class App
 	        	}
 	        } while (!s.equals("exit"));
 	        
+	        System.out.println("\n\n\n"+dictionnary+"\n");
 	        parse(new ArrayList<String>(fi.getSelectedFeature(configName)));
 	    	System.out.println(dictionnary);
 	        
@@ -112,6 +163,7 @@ public class App
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
     	
     }
 }

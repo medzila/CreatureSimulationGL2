@@ -90,7 +90,7 @@
                 <!-- automatically creates the classpath using all project dependencies, 
                      also adding the project build directory -->
                 <classpath />
-                <argument>fr.unice.deptinfo.simu_generator.App</argument>
+                <argument>config.ConfigHandler</argument>
               </arguments>   
             </configuration>
           </plugin>
