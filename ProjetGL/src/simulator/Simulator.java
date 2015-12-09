@@ -12,6 +12,12 @@ public class Simulator<T extends IActionable> {
 
 	/** Animation thread. */
 	private Thread thread;
+	
+	/**Ticks thread*/
+	private int ticks = 0;
+	
+	/**Stop after maxTicks*/
+	private int maxTicks = 0;
 
 	/** A flag for controlling the simulation thread */
 	private volatile boolean running = false;
@@ -40,9 +46,13 @@ public class Simulator<T extends IActionable> {
 			}
 		}
 		thread = new Thread() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				while (running) {
+					if((ticks >= maxTicks) && (maxTicks != 0) ){
+						this.stop();
+					}
 					try {
 						synchronized (this) {
 							Thread.sleep(executionDelay);
@@ -52,6 +62,7 @@ public class Simulator<T extends IActionable> {
 					}
 					simulate();
 					notifySimulationListeners();
+					ticks+=1;
 				}
 			}
 		};
@@ -104,5 +115,11 @@ public class Simulator<T extends IActionable> {
 		}
 		this.executionDelay = executionDelay;
 	}
+
+	public void setMaxTicks(int maxTicks) {
+		this.maxTicks = maxTicks;
+	}
+	
+	
 
 }
