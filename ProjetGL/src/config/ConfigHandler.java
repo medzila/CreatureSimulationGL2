@@ -85,7 +85,7 @@ public class ConfigHandler
 		dictionnary.put("LOV", "50");
 		dictionnary.put("FOV", "45");
 		dictionnary.put("ES", "0");
-		dictionnary.put("SD", "0");
+		dictionnary.put("SD", "10");
 		dictionnary.put("Duration", "1000");
 	}
 	
@@ -117,6 +117,7 @@ public class ConfigHandler
     	
     	ConfigHandler c = new ConfigHandler();
     	c.launchConfig();
+    	Launcher.launch(c.dictionnary);
     	
     	/*//init the dict
     	

@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 import plug.creatures.ColorPluginFactory;
 import plug.creatures.BehaviorPluginFactory;
@@ -103,7 +106,15 @@ public class Launcher extends JFrame {
         
     }
     
-    private void exit(WindowEvent evt) {
+    
+    
+    public CreatureSimulator getSimulator() {
+		return simulator;
+	}
+
+
+
+	private void exit(WindowEvent evt) {
         System.exit(0);
     }
 
@@ -426,15 +437,22 @@ public class Launcher extends JFrame {
         
     }
     
-    public static void launch(int i){
+    public static void launch(HashMap<String, String> dictionnary){
     	Logger.getLogger("plug").setLevel(Level.INFO);
         MovementPluginFactory.init();
         BehaviorPluginFactory.init();
         ColorPluginFactory.init();
         Launcher launcher = new Launcher();
         launcher.setVisible(true);
-        /* Easiest simulator*/
-        launcher.creatureNumber = i;
+    	launcher.behavior = BehaviorPluginFactory.getInstance().getMap().get("creatures.behavior."+dictionnary.get("BEV")+"Behavior");
+    	launcher.movement = MovementPluginFactory.getInstance().getMap().get("creatures.movement."+dictionnary.get("MOV")+"Movement");
+    	launcher.colorConstructor = ColorPluginFactory.getInstance().getConstructorMap().get("creatures.color.Color"+dictionnary.get("COL"));
+    	launcher.creatureNumber = Integer.parseInt(dictionnary.get("CHC"));
+        launcher.spotsNumber = Integer.parseInt(dictionnary.get("EHC"));
+        Launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
+        launcher.getSimulator().setExecutionDelay(Integer.parseInt(dictionnary.get("SD")));
+        launcher.getSimulator().setMaxTicks(Integer.parseInt(dictionnary.get("Duration")));
+        System.out.println("creatures.behavior."+dictionnary.get("BEV")+"\ncreatures.movement."+dictionnary.get("MOV")+"Movement\n"+Integer.parseInt(dictionnary.get("CHC")));        
     }
 //    
 //    public static void main(String args[]) {
