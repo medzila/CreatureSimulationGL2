@@ -66,6 +66,8 @@ regles = constraints(Court -> D_1000;
 					Recherche -> MOV_Torus;
 					Recherche -> FOV_45;
 		  			Recherche -> LOV_50;
+		  			ModeleRecherche -> EHC_5;
+		  			ModeleRecherche -> ES_50;
 					MortIneluctable -> EHC_1;
 					MortIneluctable -> ES_1000;
 					Immortels -> CHC_25;
