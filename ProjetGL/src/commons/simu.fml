@@ -27,7 +27,7 @@ Domaine = FM (DomainCreatureSimulator : Affichage DomainCreature [Demo];
 		  Type: (Troupeau|Rebond|Predateur|Recherche);
 		  Nombre: (Seul|Peu|Beaucoup);
 		  Demo : (DemoParametrable|DemoNonParametrable);
-		  DemoParametrable : (ModelePredateur|ModeleRecherche);
+		  DemoParametrable : (ModelePredateur|ModeleRecherche|BcpEngSrc|PeuEngSrc|PasEngSrc);
 		  DemoNonParametrable : (MortIneluctable|Immortels);
 		  ModelePredateur -> !Seul;
 		  ModelePredateur -> Predateur;
@@ -74,6 +74,10 @@ regles = constraints(Court -> D_1000;
 					Immortels -> EHC_10;
 					Immortels -> ES_50;
 					Immortels -> MOV_Torus;
+					BcpEngSrc -> EHC_10;
+					BcpEngSrc -> ES_50;
+					PeuEngSrc -> EHC_5;
+					PeuEngSrc -> ES_50;
 					Debug -> SD_1000;
 					Debug -> ImplementationRealTime;)
 fmSimu = aggregate { Implementation Domaine } withMapping regles
