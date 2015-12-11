@@ -6,7 +6,7 @@
   <name>TP5-final</name>
   <properties>
   
-      <scenarioTest>0</scenarioTest>
+      <demoTest>0</demoTest>
     </properties>
     <repositories>
 		<repository>
@@ -91,6 +91,7 @@
                      also adding the project build directory -->
                 <classpath />
                 <argument>config.ConfigHandler</argument>
+                <argument>${demoTest}</argument>
               </arguments>   
             </configuration>
           </plugin>

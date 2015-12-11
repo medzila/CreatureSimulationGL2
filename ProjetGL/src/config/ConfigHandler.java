@@ -29,10 +29,11 @@ public class ConfigHandler
 	public static Matcher matcher;
 	
 	public static String pathOfFML = "src/commons/simu.fml";
+	private String configuration;
 	
-	
-	public ConfigHandler(){
+	public ConfigHandler(String conf){
 		initDictionnary();
+		this.configuration = conf;
 	}
 
 	public void launchConfig(){
@@ -49,7 +50,7 @@ public class ConfigHandler
 	    	fi.eval(configName+" = configuration "+fmName);
 	    	
 	    	System.out.println("Selected avant: "+fi.getSelectedFeature(configName));
-	    	fi.evalFile("config/config1.fml");
+	    	fi.evalFile("config/"+configuration+".fml");
 	    	System.out.println("Selected apres: "+fi.getSelectedFeature(configName));
 	    	
 	        System.out.println("\n\n\n"+dictionnary+"\n");
@@ -115,7 +116,7 @@ public class ConfigHandler
     public static void main( String[] args ) throws IOException
     {
     	
-    	ConfigHandler c = new ConfigHandler();
+    	ConfigHandler c = new ConfigHandler(args[0]);
     	c.launchConfig();
     	Launcher.launch(c.dictionnary);
     	

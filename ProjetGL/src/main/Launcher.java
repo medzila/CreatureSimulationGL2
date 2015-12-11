@@ -449,7 +449,7 @@ public class Launcher extends JFrame {
     	launcher.colorConstructor = ColorPluginFactory.getInstance().getConstructorMap().get("creatures.color.Color"+dictionnary.get("COL"));
     	launcher.creatureNumber = Integer.parseInt(dictionnary.get("CHC"));
         launcher.spotsNumber = Integer.parseInt(dictionnary.get("EHC"));
-        Launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
+        launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
         launcher.getSimulator().setExecutionDelay(Integer.parseInt(dictionnary.get("SD")));
         launcher.getSimulator().setMaxTicks(Integer.parseInt(dictionnary.get("Duration")));
         System.out.println("creatures.behavior."+dictionnary.get("BEV")+"\ncreatures.movement."+dictionnary.get("MOV")+"Movement\n"+Integer.parseInt(dictionnary.get("CHC")));        
