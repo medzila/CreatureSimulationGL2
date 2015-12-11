@@ -68,7 +68,7 @@ public class Launcher extends JFrame {
     public double lengthOfView = 50;
     public double fieldOfView = Math.toRadians(90);
     public int creatureNumber = 10;
-    public int spotsNumber = 10;
+    public static int spotsNumber = 10;
     public static int spotsSize = 40;
     
     public static float THRESHOLD = (float) (ComposableCreature.DEFAULT_HEALTH / 2);

@@ -41,7 +41,7 @@ public class ComposableCreature implements ICreature, ImageObserver {
 	public static final int DEFAULT_SIZE = 80;
 	public static final int DEFAULT_VISION_DISTANCE = 50;
 	public static final double DEFAULT_HEALTH = 100d;
-	public static final double DEFAULT_LOSS_HEALTH = 0.05d;
+	public static double DEFAULT_LOSS_HEALTH = 0.05d;
 	public static final double DEFAULT_GAINED_HEALTH = 5d;
 	public static final int DEFAULT_TICKS_BEFORE_BURN = (int)(Launcher.spotsSize/2);
 	public static final String FLAME_IMAGE_PATH = "src/commons/flame.png";
@@ -122,6 +122,9 @@ public class ComposableCreature implements ICreature, ImageObserver {
 		this.movement = move;
 		this.currCycle = 0;
 		this.target = false;
+		if((int)(Launcher.spotsNumber)==0){
+			DEFAULT_LOSS_HEALTH = 0.00d;
+		}
 		try{
 			imgFlame = ImageIO.read(new File(FLAME_IMAGE_PATH));
 		}catch(IOException e){
