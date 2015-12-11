@@ -31,12 +31,11 @@ public class ConfigHandler
 	public static String pathOfFML = "src/commons/simu.fml";
 	private String configuration;
 	
-	public ConfigHandler(String conf){
+	public ConfigHandler(){
 		initDictionnary();
-		this.configuration = conf;
 	}
 
-	public void launchConfig(){
+	public void launchConfig(String configuration){
 		String fmName = "fmSimu";
     	String configName = "config";
  
@@ -116,8 +115,8 @@ public class ConfigHandler
     public static void main( String[] args ) throws IOException
     {
     	
-    	ConfigHandler c = new ConfigHandler(args[0]);
-    	c.launchConfig();
+    	ConfigHandler c = new ConfigHandler();
+    	c.launchConfig(args[0]);
     	Launcher.launch(c.dictionnary);
     	
     	/*//init the dict
