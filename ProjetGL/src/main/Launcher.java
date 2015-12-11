@@ -65,6 +65,8 @@ public class Launcher extends JFrame {
     private JPanel buttonsAndTreshold = new JPanel(new GridBagLayout());
     private JPanel threshold = new JPanel(new GridBagLayout());
     
+    public double lengthOfView = 50;
+    public double fieldOfView = Math.toRadians(90);
     public int creatureNumber = 10;
     public int spotsNumber = 10;
     public static int spotsSize = 40;
@@ -384,8 +386,7 @@ public class Launcher extends JFrame {
                     simulator.clearSpots();
                     simulator.clearStat();
                     try {
-                        creatures = Builder.createCreatures(simulator, creatureNumber, colorConstructor.newInstance(Color.BLUE, creatureNumber),behavior.newInstance(), movement, myMaxSpeed);
-                        
+                        creatures = Builder.createCreatures(simulator, creatureNumber, colorConstructor.newInstance(Color.BLUE, creatureNumber),behavior.newInstance(), movement, myMaxSpeed, fieldOfView , lengthOfView);
                         Collection<EnergySource> spots = Builder.createPoints(simulator, spotsNumber, spotsSize);
                         simulator.addAllCreatures(creatures);
                         simulator.addAllSpots(spots);
@@ -452,7 +453,9 @@ public class Launcher extends JFrame {
         launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
         launcher.getSimulator().setExecutionDelay(Integer.parseInt(dictionnary.get("SD")));
         launcher.getSimulator().setMaxTicks(Integer.parseInt(dictionnary.get("Duration")));
-        System.out.println("creatures.behavior."+dictionnary.get("BEV")+"\ncreatures.movement."+dictionnary.get("MOV")+"Movement\n"+Integer.parseInt(dictionnary.get("CHC")));        
+        launcher.fieldOfView = Math.toRadians(Integer.parseInt(dictionnary.get("FOV")));
+        launcher.lengthOfView = Integer.parseInt(dictionnary.get("LOV"));
+        
     }
 //    
 //    public static void main(String args[]) {

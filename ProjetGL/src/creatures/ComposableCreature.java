@@ -209,6 +209,15 @@ public class ComposableCreature implements ICreature, ImageObserver {
 	public double getFieldOfView() {
 		return fieldOfView;
 	}
+	
+	public void setFieldOfView(double fieldOfView){
+		this.fieldOfView = fieldOfView;
+	}
+	
+	public void setLengthOfView(double lengthOfView){
+		this.visionDistance=lengthOfView;
+	}
+
 
 	public double getLengthOfView() {
 		return visionDistance;

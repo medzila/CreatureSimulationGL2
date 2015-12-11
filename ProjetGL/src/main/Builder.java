@@ -18,7 +18,7 @@ public class Builder {
 	private final static Random rand = new Random();
 
 	static public  Collection<ComposableCreature> createCreatures(IEnvironment env, int count, 
-								IColorStrategy colorStrategy, IStrategyBehavior comp, IStrategieMovement depl, double maxSpeed) {
+								IColorStrategy colorStrategy, IStrategyBehavior comp, IStrategieMovement depl, double maxSpeed, double fieldOfView , double lengthOfView) {
 		Collection<ComposableCreature> creatures = new ArrayList<ComposableCreature>();		
 		Dimension s = env.getSize();		
 		for (int i=0; i<count; i++) {	
@@ -32,6 +32,8 @@ public class Builder {
 			int speed = (int) (rand.nextDouble() * maxSpeed);			
 			ComposableCreature creature = null;
 			creature = new ComposableCreature(env, new Point2D.Double(x,y), direction, speed, colorStrategy.getColor(), comp, depl);
+			creature.setFieldOfView(fieldOfView);
+			creature.setLengthOfView(lengthOfView);
 			creatures.add(creature);
 		}		
 		return creatures;
