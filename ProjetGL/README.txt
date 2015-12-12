@@ -1,4 +1,4 @@
-Projet / TP LONG sur le chargement dynamique  
+Projet / TP LONG sur la Variabilité
 
 Feature Models:
 
@@ -19,7 +19,7 @@ nous mettons le Thread.sleep() a 0 et on choisi la durée de la simulation.
 Toutes les features qui on un lien direct avec une variable dans le code sont de la forme "identifiant_valeur"
 afin de facilité l'implementation du lien entre FM et code.
 De plus tous le FM est écrit en anglais, d'une part pour facilité le pont entre les deux et empecher deux features d'avoir le même
-nom et d'autre part car tous notre code est écrut en anglais.
+nom et d'autre part car tous notre code est écrit en anglais.
 
 Domaine:
 
@@ -40,3 +40,4 @@ Le pont:
 
 
 Utilisation des fichiers de config:
+
