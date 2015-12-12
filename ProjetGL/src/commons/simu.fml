@@ -4,7 +4,7 @@ Implementation = FM (ImplementationCreatureSimulator : Engine ImplementationCrea
 		  EnergySource : EnergyHeadcount Size;
 		  Behaviour : (BEV_Emerging|BEV_Energy|BEV_Predator|BEV_Random|BEV_Stupid|BEV_EmergingThenEnergy|BEV_EmergingThenPredator);
 		  Movement : (MOV_Torus|MOV_Bouncing);
-		  Visual : (ImplementationSnapshot|ImplementationRealTime);
+		  Visual : (Implementation_Snapshot|Implementation_RealTime);
 		  CreatureHeadcount : (CHC_1|CHC_25|CHC_50);
 		  EnergyHeadcount : (EHC_1|EHC_5|EHC_10);
 		  Color : (COL_Cube|COL_Unique);
@@ -13,8 +13,8 @@ Implementation = FM (ImplementationCreatureSimulator : Engine ImplementationCrea
 		  Size : (ES_20|ES_50|ES_1000);
 		  SleepDuration : (SD_10|SD_0|SD_200|SD_1000);
 		  Duration : (D_1000|D_5000|D_10000);
-		  ImplementationSnapshot->SD_0;
-		  ImplementationSnapshot->Duration;
+		  Implementation_Snapshot->SD_0;
+		  Implementation_Snapshot->Duration;
 		  BEV_EmergingThenEnergy-> EnergySource;
 		  BEV_Energy->EnergySource;
 		  ES_1000->EHC_1;)
@@ -46,8 +46,8 @@ regles = constraints(Court -> D_1000;
 					TresRapide -> SD_10;
 					Rapide -> SD_200;
 					Lente -> SD_1000;
-					DomainSnapshot -> ImplementationSnapshot;
-					!DomainSnapshot -> ImplementationRealTime;
+					DomainSnapshot -> Implementation_Snapshot;
+					!DomainSnapshot -> Implementation_RealTime;
 					Seul <-> CHC_1;
 					Peu <-> CHC_25;
 					Beaucoup <-> CHC_50;
@@ -79,6 +79,6 @@ regles = constraints(Court -> D_1000;
 					PeuEngSrc -> EHC_5;
 					PeuEngSrc -> ES_50;
 					Debug -> SD_1000;
-					Debug -> ImplementationRealTime;)
+					Debug -> Implementation_RealTime;)
 fmSimu = aggregate { Implementation Domaine } withMapping regles
 
