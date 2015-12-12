@@ -4,7 +4,7 @@ Implementation = FM (ImplementationCreatureSimulator : Engine ImplementationCrea
 		  EnergySource : EnergyHeadcount Size;
 		  Behaviour : (BEV_Emerging|BEV_Energy|BEV_Predator|BEV_Random|BEV_Stupid|BEV_EmergingThenEnergy|BEV_EmergingThenPredator);
 		  Movement : (MOV_Torus|MOV_Bouncing);
-		  Visual : (ImplementationSnapshot|ImplementationRealTime);
+		  Visual : (Implementation_Snapshot|Implementation_RealTime);
 		  CreatureHeadcount : (CHC_1|CHC_25|CHC_50);
 		  EnergyHeadcount : (EHC_1|EHC_5|EHC_10);
 		  Color : (COL_Cube|COL_Unique);
