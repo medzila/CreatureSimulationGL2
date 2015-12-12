@@ -24,9 +24,6 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-
 import plug.creatures.ColorPluginFactory;
 import plug.creatures.BehaviorPluginFactory;
 import plug.creatures.MovementPluginFactory;
@@ -445,6 +442,7 @@ public class Launcher extends JFrame {
         ColorPluginFactory.init();
         Launcher launcher = new Launcher();
         launcher.setVisible(true);
+        
     	launcher.behavior = BehaviorPluginFactory.getInstance().getMap().get("creatures.behavior."+dictionnary.get("BEV")+"Behavior");
     	launcher.movement = MovementPluginFactory.getInstance().getMap().get("creatures.movement."+dictionnary.get("MOV")+"Movement");
     	launcher.colorConstructor = ColorPluginFactory.getInstance().getConstructorMap().get("creatures.color.Color"+dictionnary.get("COL"));
@@ -452,9 +450,11 @@ public class Launcher extends JFrame {
         launcher.spotsNumber = Integer.parseInt(dictionnary.get("EHC"));
         launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
         launcher.getSimulator().setExecutionDelay(Integer.parseInt(dictionnary.get("SD")));
-        launcher.getSimulator().setMaxTicks(Integer.parseInt(dictionnary.get("Duration")));
+        launcher.getSimulator().setMaxTicks(Integer.parseInt(dictionnary.get("D")));
         launcher.fieldOfView = Math.toRadians(Integer.parseInt(dictionnary.get("FOV")));
         launcher.lengthOfView = Integer.parseInt(dictionnary.get("LOV"));
+        
+        launcher.getSimulator().setSnapshot(dictionnary.get("Implementation").equals("Snapshot")? true : false );
         
     }
 //    

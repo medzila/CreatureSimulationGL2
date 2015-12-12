@@ -18,6 +18,9 @@ public class Simulator<T extends IActionable> {
 	
 	/**Stop after maxTicks*/
 	private int maxTicks = 0;
+	
+	/** To know if it's a snapshot or realtime run*/
+	private boolean isSnapshot = false;
 
 	/** A flag for controlling the simulation thread */
 	private volatile boolean running = false;
@@ -74,9 +77,10 @@ public class Simulator<T extends IActionable> {
 	}
 
 	public void notifySimulationListeners() {
-		for (ISimulationListener l : listeners) {
-			l.simulationCycleComputed();
-		}
+		if(!isSnapshot || (isSnapshot && (ticks >= maxTicks) && (maxTicks != 0) ))
+			for (ISimulationListener l : listeners) {
+				l.simulationCycleComputed();
+			}
 	}
 
 	public void addSimulationListener(ISimulationListener listener) {
@@ -120,6 +124,11 @@ public class Simulator<T extends IActionable> {
 		this.maxTicks = maxTicks;
 	}
 	
-	
+	public boolean isSnapshot() {
+		return isSnapshot;
+	}
 
+	public void setSnapshot(boolean isSnapshot) {
+		this.isSnapshot = isSnapshot;
+	}
 }
