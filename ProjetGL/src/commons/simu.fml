@@ -13,8 +13,8 @@ Implementation = FM (ImplementationCreatureSimulator : Engine ImplementationCrea
 		  Size : (ES_20|ES_50|ES_1000);
 		  SleepDuration : (SD_10|SD_0|SD_200|SD_1000);
 		  Duration : (D_1000|D_5000|D_10000);
-		  ImplementationSnapShot->SD_0;
-		  ImplementationSnapShot->Duration;
+		  Implementation_SnapShot->SD_0;
+		  Implementation_SnapShot->Duration;
 		  BEV_EmergingThenEnergy-> EnergySource;
 		  BEV_Energy->EnergySource;
 		  ES_1000->EHC_1;)
@@ -46,8 +46,8 @@ regles = constraints(Court -> D_1000;
 					TresRapide -> SD_10;
 					Rapide -> SD_200;
 					Lente -> SD_1000;
-					DomainSnapshot -> ImplementationSnapshot;
-					!DomainSnapshot -> ImplementationRealTime;
+					DomainSnapshot -> Implementation_Snapshot;
+					!DomainSnapshot -> Implementation_RealTime;
 					Seul <-> CHC_1;
 					Peu <-> CHC_25;
 					Beaucoup <-> CHC_50;
@@ -79,6 +79,6 @@ regles = constraints(Court -> D_1000;
 					PeuEngSrc -> EHC_5;
 					PeuEngSrc -> ES_50;
 					Debug -> SD_1000;
-					Debug -> ImplementationRealTime;)
+					Debug -> Implementation_RealTime;)
 fmSimu = aggregate { Implementation Domaine } withMapping regles
 
