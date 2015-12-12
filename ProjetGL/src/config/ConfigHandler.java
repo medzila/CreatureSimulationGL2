@@ -29,7 +29,6 @@ public class ConfigHandler
 	public static Matcher matcher;
 	
 	public static String pathOfFML = "src/commons/simu.fml";
-	private String configuration;
 	
 	public ConfigHandler(){
 		initDictionnary();
@@ -77,16 +76,17 @@ public class ConfigHandler
 	 * Initialize the dictionnary
 	 */
 	public static void initDictionnary(){
-		dictionnary.put("BEV", "Random");
-		dictionnary.put("MOV", "Torus");
-		dictionnary.put("CHC", "1");
-		dictionnary.put("EHC", "0");
-		dictionnary.put("COL", "Cube");
-		dictionnary.put("LOV", "50");
-		dictionnary.put("FOV", "45");
-		dictionnary.put("ES", "0");
-		dictionnary.put("SD", "10");
-		dictionnary.put("Duration", "1000");
+		dictionnary.put("BEV", "Random");              	// Behavior: Random, Emerging, ...
+		dictionnary.put("MOV", "Torus");				// Movement: Torus, Bouncing
+		dictionnary.put("CHC", "1");					// CreaturesHeadcount: 1, 25, 50 
+		dictionnary.put("EHC", "0");					// EnergySourcesHeadcount: 1, 5, 10
+		dictionnary.put("COL", "Cube");					// Color: Cube or Unique
+		dictionnary.put("LOV", "50");					// LengthOfView: 50, 75, 100
+		dictionnary.put("FOV", "45");					// FieldOfView: 45, 90, 360
+		dictionnary.put("ES", "20");					// EnergySourcesSize: 20, 50, 1000
+		dictionnary.put("SD", "10");					// Sleepduration: 0, 10, 200, 1000
+		dictionnary.put("D", "5000");					// Duration: 1000, 5000, 10000
+		dictionnary.put("Implementation", "RealTime"); 	// Visual: can be RealTime or Snapshot
 	}
 	
 	/**
