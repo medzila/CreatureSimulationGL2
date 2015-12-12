@@ -22,6 +22,9 @@ public class Simulator<T extends IActionable> {
 	/** To know if it's a snapshot or realtime run*/
 	private boolean isSnapshot = false;
 
+	/** To know if we can take a screenshot*/
+	public boolean screenshot = false;
+	
 	/** A flag for controlling the simulation thread */
 	private volatile boolean running = false;
 
@@ -53,7 +56,17 @@ public class Simulator<T extends IActionable> {
 			@Override
 			public void run() {
 				while (running) {
+					System.out.println(ticks + "/ " + maxTicks);
 					if((ticks >= maxTicks) && (maxTicks != 0) ){
+						
+						// If we want to take a snap shot
+						// and we reached the last tick
+						// then take a screenshot
+						if(isSnapshot){
+							screenshot= true;
+							notifySimulationListeners();
+						}
+						
 						this.stop();
 					}
 					try {
@@ -64,7 +77,9 @@ public class Simulator<T extends IActionable> {
 						throw new RuntimeException(e);
 					}
 					simulate();
-					notifySimulationListeners();
+					// If it's a snapshot, then don't draw
+					if(!isSnapshot)
+						notifySimulationListeners();
 					ticks+=1;
 				}
 			}
@@ -77,10 +92,9 @@ public class Simulator<T extends IActionable> {
 	}
 
 	public void notifySimulationListeners() {
-		if(!isSnapshot || (isSnapshot && (ticks >= maxTicks) && (maxTicks != 0) ))
-			for (ISimulationListener l : listeners) {
-				l.simulationCycleComputed();
-			}
+		for (ISimulationListener l : listeners) {
+			l.simulationCycleComputed();
+		}
 	}
 
 	public void addSimulationListener(ISimulationListener listener) {
@@ -102,6 +116,8 @@ public class Simulator<T extends IActionable> {
 			throw new IllegalStateException("Simulation is stopped.");
 		}
 		running = false;
+		screenshot = false;
+		ticks = 0;
 	}
 
 	public synchronized boolean isRunning() {

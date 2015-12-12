@@ -121,8 +121,8 @@ public class CreatureVisualizer extends Visualizer {
 		if (debug) {
 			paintDebuggingFrame(g2);
 		}
-
-		super.paint(g2);
+		if( !simulator.isSnapshot() || (simulator.isSnapshot() && simulator.screenshot))
+			super.paint(g2);
 	}
 
 	protected void paintDebuggingFrame(Graphics2D g2) {
