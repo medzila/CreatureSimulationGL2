@@ -33,7 +33,7 @@ Domaine = FM (DomainCreatureSimulator : Affichage DomainCreature [Demo];
 		  ModelePredateur -> Predateur;
 		  MortIneluctable -> Seul;
 		  MortIneluctable -> Rebond;
-		  MortIneluctable -> Court;
+		  MortIneluctable -> Long;
 		  Immortels -> Peu;
 		  Immortels -> Troupeau;
 		  Immortels -> Long;
