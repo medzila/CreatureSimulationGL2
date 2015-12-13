@@ -10,14 +10,14 @@ Implementation = FM (ImplementationCreatureSimulator : Engine ImplementationCrea
 		  Color : (COL_Cube|COL_Unique);
 		  LengthOfView : (LOV_50|LOV_75|LOV_100);
 		  FieldOfView : (FOV_45|FOV_90|FOV_360);
-		  Size : (ES_20|ES_50|ES_1000);
+		  Size : (ES_20|ES_50|ES_2000);
 		  SleepDuration : (SD_10|SD_0|SD_200|SD_1000);
 		  Duration : (D_1000|D_5000|D_10000);
 		  Implementation_Snapshot->SD_0;
 		  Implementation_Snapshot->Duration;
 		  BEV_EmergingThenEnergy-> EnergySource;
 		  BEV_Energy->EnergySource;
-		  ES_1000->EHC_1;)
+		  ES_2000->EHC_1;)
 		  
 Domaine = FM (DomainCreatureSimulator : Affichage DomainCreature [Demo];
 		  Affichage : (DomainRealTime|DomainSnapshot|Debug);
@@ -32,8 +32,8 @@ Domaine = FM (DomainCreatureSimulator : Affichage DomainCreature [Demo];
 		  ModelePredateur -> !Seul;
 		  ModelePredateur -> Predateur;
 		  MortIneluctable -> Seul;
-		  MortIneluctable -> Rebond;
 		  MortIneluctable -> Long;
+		  MortIneluctable -> Rebond;
 		  Immortels -> Peu;
 		  Immortels -> Troupeau;
 		  Immortels -> Long;
@@ -69,7 +69,7 @@ regles = constraints(Court -> D_1000;
 		  			ModeleRecherche -> EHC_5;
 		  			ModeleRecherche -> ES_50;
 					MortIneluctable -> EHC_1;
-					MortIneluctable -> ES_1000;
+					MortIneluctable -> ES_2000;
 					Immortels -> CHC_25;
 					Immortels -> EHC_10;
 					Immortels -> ES_50;
