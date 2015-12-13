@@ -417,11 +417,11 @@ public class Launcher extends JFrame {
         launcher.spotsNumber = Integer.parseInt(dictionnary.get("EHC"));
         launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
         launcher.getSimulator().setExecutionDelay(Integer.parseInt(dictionnary.get("SD")));
-        launcher.getSimulator().setMaxTicks(Integer.parseInt(dictionnary.get("D")));
         launcher.fieldOfView = Math.toRadians(Integer.parseInt(dictionnary.get("FOV")));
         launcher.lengthOfView = Integer.parseInt(dictionnary.get("LOV"));
         
         launcher.getSimulator().setSnapshot(dictionnary.get("Implementation").equals("Snapshot")? true : false );
+        launcher.getSimulator().setMaxTicks(launcher.getSimulator().isSnapshot() ? 0 : Integer.parseInt(dictionnary.get("D")));
         launcher.buildInterface();
         launcher.pack();
         launcher.setVisible(true);
