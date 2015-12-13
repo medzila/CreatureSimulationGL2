@@ -56,7 +56,6 @@ public class Simulator<T extends IActionable> {
 			@Override
 			public void run() {
 				while (running) {
-					System.out.println(ticks + "/ " + maxTicks);
 					if((ticks >= maxTicks) && (maxTicks != 0) ){
 						
 						// If we want to take a snap shot
