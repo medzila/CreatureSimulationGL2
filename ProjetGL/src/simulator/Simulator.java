@@ -56,15 +56,13 @@ public class Simulator<T extends IActionable> {
 			@Override
 			public void run() {
 				while (running) {
-					if((ticks >= maxTicks) && (maxTicks != 0) ){
+					if(isSnapshot && maxTicks != 0 && ticks >= maxTicks ){
 						
 						// If we want to take a snap shot
 						// and we reached the last tick
 						// then take a screenshot
-						if(isSnapshot){
-							screenshot= true;
-							notifySimulationListeners();
-						}
+						screenshot= true;
+						notifySimulationListeners();
 						
 						this.stop();
 					}
