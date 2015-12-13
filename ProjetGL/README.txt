@@ -41,3 +41,11 @@ Le pont:
 
 Utilisation des fichiers de config:
 
+Les différents fichiers de config permettent de selectionner différents paramétres présent dans le domaine et lancer la simulation choisi parametrable ou non. Pour cela les fichiers de config contiennent des select permettant la selection de différents parametres dans le fichier liant le domaine et l'implémentation. Il y a 7 fichiers différents de configuation :
+1) Immortels -> Démo non paramétrable 
+2) MortIneluctable -> Demo non paramétrable
+3) ModeleRecherche -> Demo semi-paramétrable
+4) ModelePredateur -> Demo semi-parametrable
+5) BcpEngSrc -> Demo parametrable avec Beaucoup de points d'energie.
+6) PeuEngSrc -> Demo parametrable avec Peu de points d'energie.
+7) PasEngSrc -> Demo parametrable avec aucun point d'energie.
