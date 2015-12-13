@@ -16,14 +16,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.JTextField;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import plug.creatures.ColorPluginFactory;
 import plug.creatures.BehaviorPluginFactory;
 import plug.creatures.MovementPluginFactory;
@@ -92,10 +91,6 @@ public class Launcher extends JFrame {
         visualizer.add(simulator.getLabelCreaturesLife());
                 
         add(visualizer, BorderLayout.CENTER);
-        
-        buildInterface();
-
-        pack();
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
@@ -117,7 +112,6 @@ public class Launcher extends JFrame {
         System.exit(0);
     }
 
-    @SuppressWarnings("rawtypes")
     public void buildInterface() {    
         
         buttons.removeAll();
@@ -125,56 +119,51 @@ public class Launcher extends JFrame {
         
         GridBagConstraints c = new GridBagConstraints();
 
-        /** THRESHOLD Slider */
-        JSlider tresholdSlider = new JSlider(JSlider.VERTICAL, 0, (int)ComposableCreature.DEFAULT_HEALTH, (int)ComposableCreature.DEFAULT_HEALTH/2);          
-        tresholdSlider.addChangeListener(new ChangeListener() {
-
-        	@Override
-        	public void stateChanged(ChangeEvent e) {
-        		Launcher.THRESHOLD = (float) ((JSlider)e.getSource()).getValue();
+        /** THRESHOLD TextField */
+        JTextField tresholdTextField = new JTextField(Integer.toString((int)ComposableCreature.DEFAULT_HEALTH));          
+        tresholdTextField.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+        		Launcher.THRESHOLD = (float) Integer.parseInt( ((JTextField)e.getSource()).getText());
         	}
         });
 
-        tresholdSlider.setMinorTickSpacing(2);  
-        tresholdSlider.setMajorTickSpacing(25);  
 
-        tresholdSlider.setPaintLabels(true);
-        tresholdSlider.setPreferredSize(new Dimension(50, 135));
-        JPanel sliderTresholdPanel = new JPanel(new BorderLayout());
+        tresholdTextField.setFocusable(false);
+        tresholdTextField.setHorizontalAlignment(JTextField.CENTER);
+        tresholdTextField.setPreferredSize(new Dimension(20, 20));
+        
+        
+        JPanel TextFieldTresholdPanel = new JPanel(new BorderLayout());
         JLabel labelTreshold = new JLabel("Threshold", JLabel.CENTER);
-        sliderTresholdPanel.add(labelTreshold, BorderLayout.NORTH);
-        sliderTresholdPanel.add(tresholdSlider, BorderLayout.SOUTH);
+        TextFieldTresholdPanel.add(labelTreshold, BorderLayout.NORTH);
+        TextFieldTresholdPanel.add(tresholdTextField, BorderLayout.SOUTH);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        threshold.add(sliderTresholdPanel, c);  
+        threshold.add(TextFieldTresholdPanel, c);  
         
 
         /** Interface part where we define the Color Strategy */
         ActionListener colorListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // the name of the plugin is in the ActionCommand
-                colorConstructor = colorFactory.getConstructorMap().get(((JComboBox) e.getSource()).getSelectedItem());
+                colorConstructor = colorFactory.getConstructorMap().get(((JTextField) e.getSource()).getText());
             }
         };
         
-        JComboBox<String> colorComboBox = new JComboBox<String>();
-        if (! colorFactory.getConstructorMap().keySet().isEmpty()) {
-            for (String s: colorFactory.getConstructorMap().keySet()) {
-                colorComboBox.addItem(s);
-            }
-        }
-        else {
-            colorComboBox.addItem("No plugin found");
-        }
-        colorComboBox.addActionListener(colorListener);
-        colorComboBox.setSelectedIndex(0);
+        JTextField colorTextField = new JTextField(colorConstructor.getName());
+        colorTextField.setFocusable(false);
+        colorTextField.setHorizontalAlignment(JTextField.CENTER);
+        colorTextField.addActionListener(colorListener);
+
         
         JPanel choiceColorPanel = new JPanel();
         choiceColorPanel.setLayout(new BorderLayout());
         JLabel labelColorCrea = new JLabel("Color", JLabel.CENTER);
         choiceColorPanel.add(labelColorCrea, BorderLayout.NORTH);
-        choiceColorPanel.add(colorComboBox, BorderLayout.SOUTH);
+        choiceColorPanel.add(colorTextField, BorderLayout.SOUTH);
         
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
@@ -186,27 +175,20 @@ public class Launcher extends JFrame {
         ActionListener movementListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                 // the name of the plugin is in the ActionCommand
-                movement = movementFactory.getMap().get(((JComboBox) e.getSource()).getSelectedItem());
+                movement = movementFactory.getMap().get(((JTextField) e.getSource()).getText());
             }
         };
         
-        JComboBox<String> movementComboBox = new JComboBox<String>();
-        if (! movementFactory.getMap().keySet().isEmpty()) {
-            for (String s: movementFactory.getMap().keySet()) {
-                movementComboBox.addItem(s);
-            }
-        }
-        else {
-            movementComboBox.addItem("No plugin found");
-        }
-        movementComboBox.addActionListener(movementListener);
-        movementComboBox.setSelectedIndex(0);
+        JTextField movementTextField = new JTextField(movement.getName());
+        movementTextField.addActionListener(movementListener);
+        movementTextField.setHorizontalAlignment(JTextField.CENTER);
+        movementTextField.setFocusable(false);
         
         JPanel choiceMovementPanel = new JPanel();
         choiceMovementPanel.setLayout(new BorderLayout());
         JLabel labelMovementCrea = new JLabel("Movement", JLabel.CENTER);
         choiceMovementPanel.add(labelMovementCrea, BorderLayout.NORTH);
-        choiceMovementPanel.add(movementComboBox, BorderLayout.SOUTH);
+        choiceMovementPanel.add(movementTextField, BorderLayout.SOUTH);
         
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
@@ -218,27 +200,20 @@ public class Launcher extends JFrame {
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // the name of the plugin is in the ActionCommand
-                behavior = behaviorFactory.getMap().get(((JComboBox) e.getSource()).getSelectedItem());
+                behavior = behaviorFactory.getMap().get(((JTextField) e.getSource()).getText());
             }
         };
         
-        JComboBox<String> actionComboBox = new JComboBox<String>();
-        if (! behaviorFactory.getMap().keySet().isEmpty()) {
-            for (String s: behaviorFactory.getMap().keySet()) {
-                actionComboBox.addItem(s);
-            }
-        }
-        else {
-            actionComboBox.addItem("No plugin found");
-        }
-        actionComboBox.addActionListener(actionListener);
-        actionComboBox.setSelectedIndex(0);
+        JTextField actionTextField = new JTextField(behavior.getName());
+        actionTextField.addActionListener(actionListener);
+        actionTextField.setHorizontalAlignment(JTextField.CENTER);
+        actionTextField.setFocusable(false);
         
         JPanel choiceActionPanel = new JPanel();
         choiceActionPanel.setLayout(new BorderLayout());
         JLabel labelActionCrea = new JLabel("Behavior", JLabel.CENTER);
         choiceActionPanel.add(labelActionCrea, BorderLayout.NORTH);
-        choiceActionPanel.add(actionComboBox, BorderLayout.SOUTH);
+        choiceActionPanel.add(actionTextField, BorderLayout.SOUTH);
         
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 2;
@@ -285,86 +260,80 @@ public class Launcher extends JFrame {
         buttons.add(actionLoader, c);
    
         
-        /** Creatures number SLIDER */
-        JSlider numberOfCreaturesSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, creatureNumber);  
-        numberOfCreaturesSlider.addChangeListener(new ChangeListener() {
-            
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                creatureNumber = ((JSlider)e.getSource()).getValue();
+        /** Creatures number TextField */
+        JTextField numberOfCreaturesTextField = new JTextField(Integer.toString(creatureNumber));  
+        numberOfCreaturesTextField.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+                creatureNumber = Integer.parseInt(((JTextField) e.getSource()).getText());
             }
         });
         
-        numberOfCreaturesSlider.setMinorTickSpacing(2); 
-        numberOfCreaturesSlider.setMajorTickSpacing(10);
-          
-        numberOfCreaturesSlider.setPaintTicks(true);
-        numberOfCreaturesSlider.setPaintLabels(true);
+        numberOfCreaturesTextField.setHorizontalAlignment(JTextField.CENTER);
+        numberOfCreaturesTextField.setFocusable(false);
         
-        JPanel sliderNumberCreaPanel = new JPanel();
-        sliderNumberCreaPanel.setLayout(new BorderLayout());
+        
+        JPanel TextFieldNumberCreaPanel = new JPanel();
+        TextFieldNumberCreaPanel.setLayout(new BorderLayout());
         JLabel labelNumberCrea = new JLabel("Number of Creatures", JLabel.CENTER);
-        sliderNumberCreaPanel.add(labelNumberCrea, BorderLayout.NORTH);
-        sliderNumberCreaPanel.add(numberOfCreaturesSlider, BorderLayout.SOUTH);
+        TextFieldNumberCreaPanel.add(labelNumberCrea, BorderLayout.NORTH);
+        TextFieldNumberCreaPanel.add(numberOfCreaturesTextField, BorderLayout.SOUTH);
         
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 3;
-        buttons.add(sliderNumberCreaPanel, c);  
+        buttons.add(TextFieldNumberCreaPanel, c);  
         
-        /** Energy Sources number SLIDER */
-        JSlider numberOfEnergySlider = new JSlider(JSlider.HORIZONTAL, 0, 50, spotsNumber);  
-        numberOfEnergySlider.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                spotsNumber = ((JSlider)e.getSource()).getValue();
+        /** Energy Sources number TextField */
+        JTextField numberOfEnergyTextField = new JTextField(Integer.toString(spotsNumber));  
+        numberOfEnergyTextField.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+                spotsNumber = Integer.parseInt(((JTextField) e.getSource()).getText());
             }
         });
 
-        numberOfEnergySlider.setMinorTickSpacing(2);  
-        numberOfEnergySlider.setMajorTickSpacing(10);  
 
-        numberOfEnergySlider.setPaintTicks(true);  
-        numberOfEnergySlider.setPaintLabels(true);
+        numberOfEnergyTextField.setHorizontalAlignment(JTextField.CENTER);
+        numberOfEnergyTextField.setFocusable(false);
         
-        JPanel sliderNumberPanel = new JPanel();
-        sliderNumberPanel.setLayout(new BorderLayout());
+        JPanel TextFieldNumberPanel = new JPanel();
+        TextFieldNumberPanel.setLayout(new BorderLayout());
         JLabel labelNumber = new JLabel("Number of Energy", JLabel.CENTER);
-        sliderNumberPanel.add(labelNumber, BorderLayout.NORTH);
-        sliderNumberPanel.add(numberOfEnergySlider, BorderLayout.SOUTH);
+        TextFieldNumberPanel.add(labelNumber, BorderLayout.NORTH);
+        TextFieldNumberPanel.add(numberOfEnergyTextField, BorderLayout.SOUTH);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 3;
-        buttons.add(sliderNumberPanel, c);  
+        buttons.add(TextFieldNumberPanel, c);  
 
-        /** Energy Sources Sizes number SLIDER */
-        JSlider sizeOfEnergySlider = new JSlider(JSlider.HORIZONTAL, 0, 100, spotsSize);  
-        sizeOfEnergySlider.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                spotsSize = ((JSlider)e.getSource()).getValue();
+        /** Energy Sources Sizes number TextField */
+        JTextField sizeOfEnergyTextField = new JTextField(Integer.toString(spotsSize));  
+        sizeOfEnergyTextField.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+                spotsSize = Integer.parseInt(((JTextField) e.getSource()).getText());
             }
         });
 
-        sizeOfEnergySlider.setMinorTickSpacing(2);  
-        sizeOfEnergySlider.setMajorTickSpacing(10);  
 
-        sizeOfEnergySlider.setPaintTicks(true);  
-        sizeOfEnergySlider.setPaintLabels(true);  
+        sizeOfEnergyTextField.setHorizontalAlignment(JTextField.CENTER); 
+        sizeOfEnergyTextField.setFocusable(false);  
         
-        JPanel sliderSizePanel = new JPanel();
-        sliderSizePanel.setLayout(new BorderLayout());
+        JPanel TextFieldSizePanel = new JPanel();
+        TextFieldSizePanel.setLayout(new BorderLayout());
         JLabel label = new JLabel("Size of Energy", JLabel.CENTER);
-        sliderSizePanel.add(label, BorderLayout.NORTH);
-        sliderSizePanel.add(sizeOfEnergySlider, BorderLayout.SOUTH);
+        TextFieldSizePanel.add(label, BorderLayout.NORTH);
+        TextFieldSizePanel.add(sizeOfEnergyTextField, BorderLayout.SOUTH);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 2;
         c.gridy = 3;
-        buttons.add(sliderSizePanel, c);  
+        buttons.add(TextFieldSizePanel, c);  
         
 
         /** Button that (RE-)START the simulation */
@@ -441,8 +410,6 @@ public class Launcher extends JFrame {
         BehaviorPluginFactory.init();
         ColorPluginFactory.init();
         Launcher launcher = new Launcher();
-        launcher.setVisible(true);
-        
     	launcher.behavior = BehaviorPluginFactory.getInstance().getMap().get("creatures.behavior."+dictionnary.get("BEV")+"Behavior");
     	launcher.movement = MovementPluginFactory.getInstance().getMap().get("creatures.movement."+dictionnary.get("MOV")+"Movement");
     	launcher.colorConstructor = ColorPluginFactory.getInstance().getConstructorMap().get("creatures.color.Color"+dictionnary.get("COL"));
@@ -455,6 +422,9 @@ public class Launcher extends JFrame {
         launcher.lengthOfView = Integer.parseInt(dictionnary.get("LOV"));
         
         launcher.getSimulator().setSnapshot(dictionnary.get("Implementation").equals("Snapshot")? true : false );
+        launcher.buildInterface();
+        launcher.pack();
+        launcher.setVisible(true);
         
     }
 //    
