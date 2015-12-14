@@ -38,6 +38,25 @@ Nous obtenons bien à la fin trois comportement mort, ce qui était attendu vu q
 
 Le pont:
 
+Le pont entre le feature model et le code de la simulation se fait grâce à la classe ConfigHandler.
+On récupère le fichier fml qu'on evalue. On évalue ensuite un fichier de configuration se trouvant dans le dossier Config/. Les fonctionnalités séléctionnées grâce à cette configuration sont parsées.
+Le parsing se fait seulement sur les fonctionnalités ayant un "_". En effet, la partie avant de l'underscore est une clé contenue initialement dans un dictionnaire et la partie après l'underscore est la valeur de la clé en question.
+Ce dictionnaire contient un ensemble de clé / valeur initialement définies ce qui permet une configuration par defaut.
+Une fois ces étapes terminées, le dictionnaire mis à jour est transmis au Launcher qui crée la simulation correspondante aux fonctionnalités séléctionnées.
+Par exemple:
+	Si on veut appliquer la fonctionnalité "nombre de créature", on fait:
+		launcher.nombreCreatures(dictionnaire.get("CHC"));
+
+Rajouts dans le code:
+
+-Snapshot: permet de n'afficher que l'état de la simulation après n ticks.
+	Rajout d'un booleen isSnapshot dans le Simulator.
+	Tant qu'on n'arrive pas à n ticks on n'affiche pas la simulation.
+-Duration: nombre de ticks avant de prendre un snapshot.
+	Rajout d'un nombre de ticks max dans le Simulator.
+	On arrête la simulation lorsque les ticks actuels atteigne le nombre de ticks max.
+-Affichage des valeurs de la configuration dans l'interface: il n'y a plus de slider où de choix à faire.
+
 
 Utilisation des fichiers de config:
 
