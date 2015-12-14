@@ -1,12 +1,13 @@
 Implementation = FM (ImplementationCreatureSimulator : Engine ImplementationCreature [EnergySource];
 		  Engine : [SleepDuration] [Duration] Visual;
-		  ImplementationCreature : CreatureHeadcount Behaviour Movement [Color] [LengthOfView] [FieldOfView];
+		  ImplementationCreature : CreatureHeadcount Behaviour Movement [Color] [LengthOfView] [FieldOfView] [Threshold];
 		  EnergySource : EnergyHeadcount Size;
+		  Threshold : (THS_0|THS_50|THS_100);
 		  Behaviour : (BEV_Emerging|BEV_Energy|BEV_Predator|BEV_Random|BEV_Stupid|BEV_EmergingThenEnergy|BEV_EmergingThenPredator);
 		  Movement : (MOV_Torus|MOV_Bouncing);
 		  Visual : (Implementation_Snapshot|Implementation_RealTime);
 		  CreatureHeadcount : (CHC_1|CHC_25|CHC_50);
-		  EnergyHeadcount : (EHC_1|EHC_5|EHC_10);
+		  EnergyHeadcount : (EHC_0|EHC_1|EHC_5|EHC_10);
 		  Color : (COL_Cube|COL_Unique);
 		  LengthOfView : (LOV_50|LOV_75|LOV_100);
 		  FieldOfView : (FOV_45|FOV_90|FOV_360);
@@ -15,7 +16,9 @@ Implementation = FM (ImplementationCreatureSimulator : Engine ImplementationCrea
 		  Duration : (D_1000|D_5000|D_10000);
 		  Implementation_Snapshot->SD_0;
 		  Implementation_Snapshot->Duration;
+		  BEV_EmergingThenPredator -> Threshold;
 		  BEV_EmergingThenEnergy-> EnergySource;
+		  BEV_EmergingThenEnergy -> Threshold;
 		  BEV_Energy->EnergySource;
 		  ES_2000->EHC_1;)
 		  
