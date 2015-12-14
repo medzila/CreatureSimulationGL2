@@ -410,18 +410,30 @@ public class Launcher extends JFrame {
         BehaviorPluginFactory.init();
         ColorPluginFactory.init();
         Launcher launcher = new Launcher();
-    	launcher.behavior = BehaviorPluginFactory.getInstance().getMap().get("creatures.behavior."+dictionnary.get("BEV")+"Behavior");
-    	launcher.movement = MovementPluginFactory.getInstance().getMap().get("creatures.movement."+dictionnary.get("MOV")+"Movement");
-    	launcher.colorConstructor = ColorPluginFactory.getInstance().getConstructorMap().get("creatures.color.Color"+dictionnary.get("COL"));
-    	launcher.creatureNumber = Integer.parseInt(dictionnary.get("CHC"));
-        Launcher.spotsNumber = Integer.parseInt(dictionnary.get("EHC"));
-        Launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
-        launcher.getSimulator().setExecutionDelay(Integer.parseInt(dictionnary.get("SD")));
-        launcher.fieldOfView = Math.toRadians(Integer.parseInt(dictionnary.get("FOV")));
-        launcher.lengthOfView = Integer.parseInt(dictionnary.get("LOV"));
         
+        // set the behavior
+    	launcher.behavior = BehaviorPluginFactory.getInstance().getMap().get("creatures.behavior."+dictionnary.get("BEV")+"Behavior");
+    	// set the movement
+    	launcher.movement = MovementPluginFactory.getInstance().getMap().get("creatures.movement."+dictionnary.get("MOV")+"Movement");
+    	// set the color
+    	launcher.colorConstructor = ColorPluginFactory.getInstance().getConstructorMap().get("creatures.color.Color"+dictionnary.get("COL"));
+    	// set the creatures headcount
+    	launcher.creatureNumber = Integer.parseInt(dictionnary.get("CHC"));
+    	// set the energy sources headcount
+        Launcher.spotsNumber = Integer.parseInt(dictionnary.get("EHC"));
+        // set the energy sources sizes
+        Launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
+        // set the sleep duration
+        launcher.getSimulator().setExecutionDelay(Integer.parseInt(dictionnary.get("SD")));
+        // set the FOV
+        launcher.fieldOfView = Math.toRadians(Integer.parseInt(dictionnary.get("FOV")));
+        // set the LOV
+        launcher.lengthOfView = Integer.parseInt(dictionnary.get("LOV"));
+        // set the Snapshot
         launcher.getSimulator().setSnapshot(dictionnary.get("Implementation").equals("Snapshot")? true : false );
+        // set the duration
         launcher.getSimulator().setMaxTicks(launcher.getSimulator().isSnapshot() ? 0 : Integer.parseInt(dictionnary.get("D")));
+        // set the the treshold
         Launcher.THRESHOLD = Integer.parseInt(dictionnary.get("THS"));
         
         launcher.buildInterface();
