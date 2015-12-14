@@ -161,7 +161,7 @@
     </goals>
   </execution>
 <execution>
-    <id>cleanouz</id>
+    <id>clean</id>
     <phase>clean</phase>
     <configuration>
       <target>

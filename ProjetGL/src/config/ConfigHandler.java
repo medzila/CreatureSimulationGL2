@@ -79,7 +79,7 @@ public class ConfigHandler
 		dictionnary.put("BEV", "Random");              	// Behavior: Random, Emerging, ...
 		dictionnary.put("MOV", "Torus");				// Movement: Torus, Bouncing
 		dictionnary.put("CHC", "1");					// CreaturesHeadcount: 1, 25, 50 
-		dictionnary.put("EHC", "0");					// EnergySourcesHeadcount: 1, 5, 10
+		dictionnary.put("EHC", "1");					// EnergySourcesHeadcount: 1, 5, 10
 		dictionnary.put("COL", "Cube");					// Color: Cube or Unique
 		dictionnary.put("LOV", "50");					// LengthOfView: 50, 75, 100
 		dictionnary.put("FOV", "45");					// FieldOfView: 45, 90, 360
