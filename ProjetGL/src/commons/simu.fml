@@ -78,6 +78,7 @@ regles = constraints(Court -> D_1000;
 					BcpEngSrc -> ES_50;
 					PeuEngSrc -> EHC_5;
 					PeuEngSrc -> ES_50;
+					PasEngSrc -> EHC_0;
 					Debug -> SD_1000;
 					Debug -> Implementation_RealTime;)
 fmSimu = aggregate { Implementation Domaine } withMapping regles
