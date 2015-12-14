@@ -414,14 +414,16 @@ public class Launcher extends JFrame {
     	launcher.movement = MovementPluginFactory.getInstance().getMap().get("creatures.movement."+dictionnary.get("MOV")+"Movement");
     	launcher.colorConstructor = ColorPluginFactory.getInstance().getConstructorMap().get("creatures.color.Color"+dictionnary.get("COL"));
     	launcher.creatureNumber = Integer.parseInt(dictionnary.get("CHC"));
-        launcher.spotsNumber = Integer.parseInt(dictionnary.get("EHC"));
-        launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
+        Launcher.spotsNumber = Integer.parseInt(dictionnary.get("EHC"));
+        Launcher.spotsSize = Integer.parseInt(dictionnary.get("ES"));
         launcher.getSimulator().setExecutionDelay(Integer.parseInt(dictionnary.get("SD")));
         launcher.fieldOfView = Math.toRadians(Integer.parseInt(dictionnary.get("FOV")));
         launcher.lengthOfView = Integer.parseInt(dictionnary.get("LOV"));
         
         launcher.getSimulator().setSnapshot(dictionnary.get("Implementation").equals("Snapshot")? true : false );
         launcher.getSimulator().setMaxTicks(launcher.getSimulator().isSnapshot() ? 0 : Integer.parseInt(dictionnary.get("D")));
+        Launcher.THRESHOLD = Integer.parseInt(dictionnary.get("THS"));
+        
         launcher.buildInterface();
         launcher.pack();
         launcher.setVisible(true);

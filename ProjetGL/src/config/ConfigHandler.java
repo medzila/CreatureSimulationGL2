@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,6 +86,7 @@ public class ConfigHandler
 		dictionnary.put("SD", "10");					// Sleepduration: 0, 10, 200, 1000
 		dictionnary.put("D", "5000");					// Duration: 1000, 5000, 10000
 		dictionnary.put("Implementation", "RealTime"); 	// Visual: can be RealTime or Snapshot
+		dictionnary.put("THS","50");					// Treshold: 0, 50, 100
 	}
 	
 	/**
