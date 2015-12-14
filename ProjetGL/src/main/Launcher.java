@@ -432,7 +432,7 @@ public class Launcher extends JFrame {
         // set the Snapshot
         launcher.getSimulator().setSnapshot(dictionnary.get("Implementation").equals("Snapshot")? true : false );
         // set the duration
-        launcher.getSimulator().setMaxTicks(launcher.getSimulator().isSnapshot() ? 0 : Integer.parseInt(dictionnary.get("D")));
+        launcher.getSimulator().setMaxTicks(!launcher.getSimulator().isSnapshot() ? 0 : Integer.parseInt(dictionnary.get("D")));
         // set the the treshold
         Launcher.THRESHOLD = Integer.parseInt(dictionnary.get("THS"));
         
