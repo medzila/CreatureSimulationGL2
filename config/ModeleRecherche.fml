@@ -1,0 +1,3 @@
+select ModeleRecherche in config 
+select Peu in config 
+select Moyen in config 

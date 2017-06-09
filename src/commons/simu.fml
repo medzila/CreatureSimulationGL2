@@ -1,0 +1,87 @@
+Implementation = FM (ImplementationCreatureSimulator : Engine ImplementationCreature [EnergySource];
+		  Engine : [SleepDuration] [Duration] Visual;
+		  ImplementationCreature : CreatureHeadcount Behaviour Movement [Color] [LengthOfView] [FieldOfView] [Threshold];
+		  EnergySource : EnergyHeadcount Size;
+		  Threshold : (THS_0|THS_50|THS_100);
+		  Behaviour : (BEV_Emerging|BEV_Energy|BEV_Predator|BEV_Random|BEV_Stupid|BEV_EmergingThenEnergy|BEV_EmergingThenPredator);
+		  Movement : (MOV_Torus|MOV_Bouncing);
+		  Visual : (Implementation_Snapshot|Implementation_RealTime);
+		  CreatureHeadcount : (CHC_1|CHC_25|CHC_50);
+		  EnergyHeadcount : (EHC_0|EHC_1|EHC_5|EHC_10);
+		  Color : (COL_Cube|COL_Unique);
+		  LengthOfView : (LOV_50|LOV_75|LOV_100);
+		  FieldOfView : (FOV_45|FOV_90|FOV_360);
+		  Size : (ES_20|ES_50|ES_2000);
+		  SleepDuration : (SD_10|SD_0|SD_200|SD_1000);
+		  Duration : (D_1000|D_5000|D_10000);
+		  Implementation_Snapshot->SD_0;
+		  Implementation_Snapshot->Duration;
+		  BEV_EmergingThenPredator -> Threshold;
+		  BEV_EmergingThenEnergy-> EnergySource;
+		  BEV_EmergingThenEnergy -> Threshold;
+		  BEV_Energy->EnergySource;
+		  ES_2000->EHC_1;)
+		  
+Domaine = FM (DomainCreatureSimulator : Affichage DomainCreature [Demo];
+		  Affichage : (DomainRealTime|DomainSnapshot|Debug);
+		  DomainSnapshot : (Court|Moyen|Long);
+		  DomainRealTime : (Lente|Rapide|TresRapide);
+		  DomainCreature : Type Nombre;
+		  Type: (Troupeau|Rebond|Predateur|Recherche);
+		  Nombre: (Seul|Peu|Beaucoup);
+		  Demo : (DemoParametrable|DemoNonParametrable);
+		  DemoParametrable : (ModelePredateur|ModeleRecherche|BcpEngSrc|PeuEngSrc|PasEngSrc);
+		  DemoNonParametrable : (MortIneluctable|Immortels);
+		  ModelePredateur -> !Seul;
+		  ModelePredateur -> Predateur;
+		  MortIneluctable -> Seul;
+		  MortIneluctable -> Long;
+		  MortIneluctable -> Rebond;
+		  Immortels -> Peu;
+		  Immortels -> Troupeau;
+		  Immortels -> Long;
+		  ModeleRecherche -> Recherche;)
+		  
+
+regles = constraints(Court -> D_1000;
+					Moyen -> D_5000;
+					Long -> D_10000;
+					TresRapide -> SD_10;
+					Rapide -> SD_200;
+					Lente -> SD_1000;
+					DomainSnapshot -> Implementation_Snapshot;
+					!DomainSnapshot -> Implementation_RealTime;
+					Seul <-> CHC_1;
+					Peu <-> CHC_25;
+					Beaucoup <-> CHC_50;
+					Predateur -> BEV_Predator;
+					Predateur -> MOV_Torus;
+					Predateur -> FOV_90;
+		  			Predateur -> LOV_100;
+					Rebond -> MOV_Bouncing;
+					Rebond -> BEV_Stupid;
+					Troupeau -> BEV_Emerging;
+					Troupeau -> MOV_Torus;
+					Troupeau -> !CHC_1;
+					Troupeau -> FOV_45;
+		  			Troupeau -> LOV_75;
+					Recherche -> BEV_Energy;
+					Recherche -> MOV_Torus;
+					Recherche -> FOV_45;
+		  			Recherche -> LOV_50;
+		  			ModeleRecherche -> EHC_5;
+		  			ModeleRecherche -> ES_50;
+					MortIneluctable -> EHC_1;
+					MortIneluctable -> ES_2000;
+					Immortels -> EHC_10;
+					Immortels -> ES_50;
+					Immortels -> MOV_Torus;
+					BcpEngSrc -> EHC_10;
+					BcpEngSrc -> ES_50;
+					PeuEngSrc -> EHC_5;
+					PeuEngSrc -> ES_50;
+					PasEngSrc -> EHC_0;
+					Debug -> SD_1000;
+					Debug -> Implementation_RealTime;)
+fmSimu = aggregate { Implementation Domaine } withMapping regles
+
